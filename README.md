@@ -1,8 +1,8 @@
-###  DATE: 23/09/2025
+###  DATE: 24/09/2025
+###  NAME:VAISHNAVIDEVI V
+###  ROLL NO : 212223040230
+###  DEPARTMENT: BE CSE
 
-###  NAME: VAISHNAVIDEVI V
-###  ROLL NO :21222304230
-###  DEPARTMENT: BE - CSE
 
 # EXPERIMENT--04-INTERUPT-GENRATION-USING-SENSOR-AND-VISUALIZING-USING-SERIAL-MONITOR
 
@@ -117,81 +117,50 @@ The diagram below shows how the GPIO pins are connected to the 16 interrupt line
   
 
 ## STM 32 CUBE PROGRAM :
-```
-#include "main.h"
-#include "stdio.h"
+```c
+#include <main.h>
+#include <stdio.h>
 #if defined (__ICCARM__) || defined (_ARMCC_VERSION)
 #define PUTCHAR_PROTOTYPE int fputc(int ch,FILE *f);
 #elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#endif
+#endif /* _`_ICCARM_ || __ARMCC_VERSION */
 
-
-
-int main(void)
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-  
-  HAL_Init();
+	if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4)==0)
+	{
+		printf("INTERRUPT NOT GENERATED\n");
+HAL_Delay(500);
 
-  
-  SystemClock_Config();
+	}
+	else
+	{
+		printf("INTERRUPT GENERATED\n");
+HAL_Delay(500);
 
-  
-  MX_GPIO_Init();
-  MX_USART2_UART_Init();
-  
-  while (1)
-  {
+	}
 
-  }
-  while(1){
-      if(interrupt_triggered){
-          printf("INTERRUPT GENERATED\n");
-          HAL_Delay(100);  // Delay here is safe
-          interrupt_triggered = 0;
-      }
-  }
-  /* USER CODE END 3 */
 }
 
+PUTCHAR_PROTOTYPE
+{
 
-//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-//	if(HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_4)==0){
-//		printf("INTERRUPT GENERATED\n");
-//		HAL_Delay(100);
-//	}else{
-//		printf("INTERRUPT NOT GENERATED\n");
-//		HAL_Delay(100);
-//	}
-//}
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-    if(GPIO_Pin == GPIO_PIN_4){
-        if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == 0){
-            interrupt_triggered = 1;
-        }
-    }
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+  return ch;
 }
-
-PUTCHAR_PROTOTYPE {
-	HAL_UART_Transmit(&huart2,(uint8_t*)&ch,1,0xFFFF);
-	return ch;
-}
-
 ```
-
-
-
 ## Output screen shots of serial port utility   :
-![image](https://github.com/user-attachments/assets/b2dec0a9-a85f-4d9a-a982-42051c7c9425)
+<img width="932" height="362" alt="image" src="https://github.com/user-attachments/assets/743bab0a-8ed1-4e8a-82c6-5fe8219124ab" />
 
- 
- 
- ## Circuit board :
- ![image](https://github.com/user-attachments/assets/d0bcd19c-83a4-4136-99a1-b849929636d6)
 
- 
+## Circuit board :
+
+ ![WhatsApp Image 2025-09-25 at 08 57 58_7646dd3b](https://github.com/user-attachments/assets/f61a42e8-8046-4acc-a878-7494a791184a)
+
+
+![WhatsApp Image 2025-09-25 at 08 57 59_fb9c1038](https://github.com/user-attachments/assets/8a6d079a-37d6-459e-8804-a9afd4cad38c)
+
  
 ## Result :
 Interfacing a  IR SENSOR and interrupt is generated using external interrupt mode , visualized on serial port 
-
